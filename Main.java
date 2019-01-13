@@ -98,10 +98,12 @@ public class Main {
 				}
 				}
 						break;
+						
 			//make a transaction
 			case "Transaction":
 			case "transaction":
 			case "trans":
+				//asks for first account in transaction, if user decides to transfer, will ask for a second account in transfer case
 				boolean hasValidAcc = false;
 				int accnum = -1;
 				BankAccount acc = null;
@@ -128,6 +130,8 @@ public class Main {
 				}
 				System.out.println("Transaction Type? Withdraw (w) Deposit (d) Transfer (t): ");
 				input = s.nextLine();
+				
+				//3 transaction cases
 				switch (input) {
 				case "Withdraw":
 				case "withdraw":
@@ -167,18 +171,18 @@ public class Main {
 					boolean hasValidReceiver = false;
 					BankAccount receiving = null;
 					while (!hasValidReceiver) {
-						System.out.println("You are transfering money FROM your account:" + acc.toString());
-						System.out.println(acc.getName()+", input the account # you would like to transfer into: ");
+						System.out.println("You are transfering money FROM your account: " + acc.toString());
+						System.out.println(acc.getName()+", input the account # you would like to transfer INTO: ");
 						input = s.nextLine();
 						if (isInt(input)) {
 							for (BankAccount a: accs) {
 								if (a.getAccNum()==Integer.parseInt(input)) {
-									hasValidAcc = true;
+									hasValidReceiver = true;
 									accnum = Integer.parseInt(input);
 									receiving = a;
 								}
 							}
-							if (!hasValidAcc) {
+							if (!hasValidReceiver) {
 								System.out.println("Account does not exist. Enter your name if you'd like to see a list of any accounts under your name.\n Otherwise, press Enter to try again: ");
 								input = s.nextLine();
 								for (BankAccount a: accs) {
@@ -201,11 +205,13 @@ public class Main {
 					}
 					else System.out.println("Invalid amount, action canceled.");
 					break;
+				default: System.out.println("Invalid input, Action Canceled");	
 				}
 				break;
 				default:
 					System.out.println("Invalid Input, Action Canceled");
 				break;
+				
 			//get your account numbers
 			case "view":
 			case "View":
@@ -216,6 +222,7 @@ public class Main {
 					if (a.getName().equals(input)) System.out.println(a.toString());
 				}
 				break;
+				
 			//terminate
 			case "quit":
 				contPlay = false;
